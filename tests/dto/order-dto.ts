@@ -1,10 +1,10 @@
 export class OrderDto {
-  status: string;
-  courierId: number;
-  customerName: string;
-  customerPhone: string;
-  comment: string;
-  id: number;
+  status: string
+  courierId: number
+  customerName: string
+  customerPhone: string
+  comment: string
+  id: number
 
   private constructor(
     status: string,
@@ -14,21 +14,21 @@ export class OrderDto {
     comment: string,
     id: number,
   ) {
-    this.status = status;
-    this.courierId = courierId;
-    this.customerName = customerName;
-    this.customerPhone = customerPhone;
-    this.comment = comment;
-    this.id = id;
+    this.status = status
+    this.courierId = courierId
+    this.customerName = customerName
+    this.customerPhone = customerPhone
+    this.comment = comment
+    this.id = id
   }
   static createOrderWithRandomData(): OrderDto {
-   return new OrderDto(
-    'OPEN',
-     Math.floor(Math.random() * 100),
-    'John Doe',
-    '+123456789',
-     'Urgent order',
-     Math.floor(Math.random() * 100),
-   )
+    return new OrderDto(
+      'OPEN',
+      Math.floor(Math.random() * 100),
+      'John Doe',
+      '+123456789',
+      'Urgent order',
+      Math.floor(Math.random() * 100),
+    )
   }
 }
