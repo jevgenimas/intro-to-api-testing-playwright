@@ -6,14 +6,16 @@ import { StatusCodes } from 'http-status-codes'
 const BASE_URL = 'https://backend.tallinn-learning.ee/test-orders'
 const VALID_API_KEY = '1234567890123456'
 
-const validOrderBody = (id: number) => ({
-  status: 'OPEN',
-  courierId: 0,
-  customerName: 'Test Customer',
-  customerPhone: '+3721234567',
-  comment: 'Playwright test',
-  id: id,
-})
+const validOrderBody = (id: number) => {
+  return {
+    status: 'OPEN',
+    courierId: 0,
+    customerName: 'Test Customer',
+    customerPhone: '+3721234567',
+    comment: 'Playwright test',
+    id: id,
+  }
+}
 
 // GET /test-orders
 
@@ -95,8 +97,8 @@ test('DELETE order with valid api_key and invalid id 11 should return 400', asyn
 })
 
 test('DELETE order with valid api_key and invalid id format should return 400', async ({
-                                                                                         request,
-                                                                                       }) => {
+  request,
+}) => {
   const response = await request.delete(`${BASE_URL}/abc`, {
     headers: {
       api_key: VALID_API_KEY,
@@ -106,8 +108,8 @@ test('DELETE order with valid api_key and invalid id format should return 400', 
 })
 
 test('DELETE order without valid api_key and with valid id should return 401', async ({
-                                                                                        request,
-                                                                                      }) => {
+  request,
+}) => {
   const response = await request.delete(`${BASE_URL}/1`, {
     headers: {
       api_key: '555555',
@@ -117,8 +119,8 @@ test('DELETE order without valid api_key and with valid id should return 401', a
 })
 
 test('DELETE order with api_key missing and with valid id should return 401', async ({
-                                                                                       request,
-                                                                                     }) => {
+  request,
+}) => {
   const response = await request.delete(`${BASE_URL}/1`, {
     headers: {
       api_key: '',
