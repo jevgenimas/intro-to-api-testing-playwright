@@ -6,16 +6,14 @@ import { StatusCodes } from 'http-status-codes'
 const BASE_URL = 'https://backend.tallinn-learning.ee/test-orders'
 const VALID_API_KEY = '1234567890123456'
 
-const validOrderBody = function (id: number) {
-  return {
-    status: 'OPEN',
-    courierId: 0,
-    customerName: 'Test Customer',
-    customerPhone: '+3721234567',
-    comment: 'Playwright test',
-    id: id,
-  }
-}
+const validOrderBody = (id: number) => ({
+  status: 'OPEN',
+  courierId: 0,
+  customerName: 'Test Customer',
+  customerPhone: '+3721234567',
+  comment: 'Playwright test',
+  id: id,
+})
 
 // GET /test-orders
 
