@@ -26,7 +26,7 @@ test('GET login with valid username and password should return 200', async ({ re
       password: 'validPass',
     },
   })
-  expect.soft(response.status()).toBe(StatusCodes.OK)
+  expect(response.status()).toBe(StatusCodes.OK)
 })
 
 test('GET login with missing password should return 500', async ({ request }) => {
@@ -36,7 +36,7 @@ test('GET login with missing password should return 500', async ({ request }) =>
       password: '',
     },
   })
-  expect.soft(response.status()).toBe(StatusCodes.INTERNAL_SERVER_ERROR)
+  expect(response.status()).toBe(StatusCodes.INTERNAL_SERVER_ERROR)
 })
 
 test('GET login with missing username should return 500', async ({ request }) => {
@@ -46,7 +46,7 @@ test('GET login with missing username should return 500', async ({ request }) =>
       password: 'validUser',
     },
   })
-  expect.soft(response.status()).toBe(StatusCodes.INTERNAL_SERVER_ERROR)
+  expect(response.status()).toBe(StatusCodes.INTERNAL_SERVER_ERROR)
 })
 
 // DELETE /test-orders/{id}
@@ -57,7 +57,7 @@ test('DELETE order with valid api_key and valid id 1 should return 204', async (
       api_key: VALID_API_KEY,
     },
   })
-  expect.soft(response.status()).toBe(StatusCodes.NO_CONTENT)
+  expect(response.status()).toBe(StatusCodes.NO_CONTENT)
 })
 
 test('DELETE order with valid api_key and valid id 5 should return 204', async ({ request }) => {
@@ -66,7 +66,7 @@ test('DELETE order with valid api_key and valid id 5 should return 204', async (
       api_key: VALID_API_KEY,
     },
   })
-  expect.soft(response.status()).toBe(StatusCodes.NO_CONTENT)
+  expect(response.status()).toBe(StatusCodes.NO_CONTENT)
 })
 
 test('DELETE order with valid api_key and valid id 10 should return 204', async ({ request }) => {
@@ -75,7 +75,7 @@ test('DELETE order with valid api_key and valid id 10 should return 204', async 
       api_key: VALID_API_KEY,
     },
   })
-  expect.soft(response.status()).toBe(StatusCodes.NO_CONTENT)
+  expect(response.status()).toBe(StatusCodes.NO_CONTENT)
 })
 
 test('DELETE order with valid api_key and invalid id 0 should return 400', async ({ request }) => {
@@ -84,7 +84,7 @@ test('DELETE order with valid api_key and invalid id 0 should return 400', async
       api_key: VALID_API_KEY,
     },
   })
-  expect.soft(response.status()).toBe(StatusCodes.BAD_REQUEST)
+  expect(response.status()).toBe(StatusCodes.BAD_REQUEST)
 })
 
 test('DELETE order with valid api_key and invalid id 11 should return 400', async ({ request }) => {
@@ -93,7 +93,7 @@ test('DELETE order with valid api_key and invalid id 11 should return 400', asyn
       api_key: VALID_API_KEY,
     },
   })
-  expect.soft(response.status()).toBe(StatusCodes.BAD_REQUEST)
+  expect(response.status()).toBe(StatusCodes.BAD_REQUEST)
 })
 
 test('DELETE order with valid api_key and invalid id format should return 400', async ({
@@ -104,7 +104,7 @@ test('DELETE order with valid api_key and invalid id format should return 400', 
       api_key: VALID_API_KEY,
     },
   })
-  expect.soft(response.status()).toBe(StatusCodes.BAD_REQUEST)
+  expect(response.status()).toBe(StatusCodes.BAD_REQUEST)
 })
 
 test('DELETE order without valid api_key and with valid id should return 401', async ({
@@ -115,7 +115,7 @@ test('DELETE order without valid api_key and with valid id should return 401', a
       api_key: '555555',
     },
   })
-  expect.soft(response.status()).toBe(StatusCodes.UNAUTHORIZED)
+  expect(response.status()).toBe(StatusCodes.UNAUTHORIZED)
 })
 
 test('DELETE order with api_key missing and with valid id should return 401', async ({
@@ -126,7 +126,7 @@ test('DELETE order with api_key missing and with valid id should return 401', as
       api_key: '',
     },
   })
-  expect.soft(response.status()).toBe(StatusCodes.UNAUTHORIZED)
+  expect(response.status()).toBe(StatusCodes.UNAUTHORIZED)
 })
 
 test('DELETE order with valid api_key and missing id should return 405', async ({ request }) => {
@@ -135,7 +135,7 @@ test('DELETE order with valid api_key and missing id should return 405', async (
       api_key: VALID_API_KEY,
     },
   })
-  expect.soft(response.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
+  expect(response.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
 })
 
 // PUT /test-orders/{id}
@@ -148,7 +148,7 @@ test('PUT order with valid data with valid id 1 should return 200', async ({ req
     },
     data: validOrderBody(1),
   })
-  expect.soft(response.status()).toBe(StatusCodes.OK)
+  expect(response.status()).toBe(StatusCodes.OK)
 })
 
 test('PUT order with valid data with valid id 5 should return 200', async ({ request }) => {
@@ -159,7 +159,7 @@ test('PUT order with valid data with valid id 5 should return 200', async ({ req
     },
     data: validOrderBody(5),
   })
-  expect.soft(response.status()).toBe(StatusCodes.OK)
+  expect(response.status()).toBe(StatusCodes.OK)
 })
 
 test('PUT order with valid data with valid id 10 should return 200', async ({ request }) => {
@@ -170,7 +170,7 @@ test('PUT order with valid data with valid id 10 should return 200', async ({ re
     },
     data: validOrderBody(10),
   })
-  expect.soft(response.status()).toBe(StatusCodes.OK)
+  expect(response.status()).toBe(StatusCodes.OK)
 })
 
 test('PUT order with valid data with invalid id 0 should return 400', async ({ request }) => {
@@ -181,7 +181,7 @@ test('PUT order with valid data with invalid id 0 should return 400', async ({ r
     },
     data: validOrderBody(0),
   })
-  expect.soft(response.status()).toBe(StatusCodes.BAD_REQUEST)
+  expect(response.status()).toBe(StatusCodes.BAD_REQUEST)
 })
 
 test('PUT order with valid data with invalid id 11 should return 400', async ({ request }) => {
@@ -192,7 +192,7 @@ test('PUT order with valid data with invalid id 11 should return 400', async ({ 
     },
     data: validOrderBody(11),
   })
-  expect.soft(response.status()).toBe(StatusCodes.BAD_REQUEST)
+  expect(response.status()).toBe(StatusCodes.BAD_REQUEST)
 })
 
 test('PUT order with invalid id and valid api_key should return 400', async ({ request }) => {
@@ -203,7 +203,7 @@ test('PUT order with invalid id and valid api_key should return 400', async ({ r
     },
     data: 'abc',
   })
-  expect.soft(response.status()).toBe(StatusCodes.BAD_REQUEST)
+  expect(response.status()).toBe(StatusCodes.BAD_REQUEST)
 })
 
 test('PUT order without api_key and valid id should return 401', async ({ request }) => {
@@ -215,7 +215,7 @@ test('PUT order without api_key and valid id should return 401', async ({ reques
     data: validOrderBody(1),
   })
 
-  expect.soft(response.status()).toBe(StatusCodes.UNAUTHORIZED)
+  expect(response.status()).toBe(StatusCodes.UNAUTHORIZED)
 })
 
 test('PUT order with invalid api_key and valid id should return 401', async ({ request }) => {
@@ -226,7 +226,7 @@ test('PUT order with invalid api_key and valid id should return 401', async ({ r
     },
     data: validOrderBody(1),
   })
-  expect.soft(response.status()).toBe(StatusCodes.UNAUTHORIZED)
+  expect(response.status()).toBe(StatusCodes.UNAUTHORIZED)
 })
 
 test('PUT order without id and valid api_key should return 405', async ({ request }) => {
@@ -237,7 +237,7 @@ test('PUT order without id and valid api_key should return 405', async ({ reques
     },
     data: '',
   })
-  expect.soft(response.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
+  expect(response.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
 })
 
 test('PUT order with valid api_key and invalid id should return 405', async ({ request }) => {
@@ -248,5 +248,5 @@ test('PUT order with valid api_key and invalid id should return 405', async ({ r
     },
     data: '',
   })
-  expect.soft(response.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
+  expect(response.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
 })
