@@ -14,12 +14,12 @@
 | PUT    | /test-orders/{id} | Method Not Allowed         | id is missing                          | 405 Method Not Allowed    |
 | PUT    | /test-orders/{id} | Too many requests          | request limit exceeded                 | 429 Too Many Requests     |
 
-| ID    | Description                      | Input data                          | Expected answer           |
-|-------|----------------------------------|-------------------------------------|---------------------------|
-| TC01  | Negative decision (income = 0)   | income=0, debt=0, age=30, ...       | 400 Bad Request           |
-| TC02  | Medium risk                      | income=2000, debt=500, age=25, ...  | 200 OK, riskLevel=Medium  |
-| TC03  | Low risk                         | income=3000, debt=0, age=30, ...    | 200 OK, riskLevel=Low     |
-| TC04  | High risk                        | income=1000, debt=900, age=20, ...  | 200 OK, riskLevel=High    |
-| TC05  | Debt < 0                         | income=2000, debt=-1, age=28, ...   | 400 Bad Request           |
-| TC06  | Age = 16                         | income=2000, debt=0, age=16, ...    | 400 Bad Request           |
+| ID    | Description                    | Input data                          | Expected answer           |
+|-------|--------------------------------|-------------------------------------|---------------------------|
+| TC01  | Negative decision (income = 0) | income=0, debt=0, age=30, ...       | 400 Bad Request           |
+| TC02  | Medium risk                    | income=2000, debt=500, age=25, ...  | 200 OK, riskLevel=Medium  |
+| TC03  | Low risk                       | income=3000, debt=0, age=30, ...    | 200 OK, riskLevel=Low     |
+| TC04  | High risk                      | income=1000, debt=900, age=20, ...  | 200 OK, riskLevel=High    |
+| TC05  | Debt < 0                       | income=2000, debt=-1, age=28, ...   | 400 Bad Request           |
+| TC06  | Age < 17 (Age = 16)            | income=2000, debt=0, age=16, ...    | 400 Bad Request           |
  
