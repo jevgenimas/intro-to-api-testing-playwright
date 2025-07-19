@@ -58,7 +58,7 @@ test.describe('Loan Decision API tests', () => {
     expect(response.status()).toBe(StatusCodes.BAD_REQUEST)
   })
 
-  test('Age less than 17 and should return 400 Bad Request', async ({ request }) => {
+  test('If under 17 years and should return 400 Bad Request', async ({ request }) => {
     const response = await request.post(URL, {
       data: LoanApplicationDto.underage(),
     })

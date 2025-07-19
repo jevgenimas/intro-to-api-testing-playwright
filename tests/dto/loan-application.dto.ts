@@ -43,6 +43,6 @@ export class LoanApplicationDto {
   }
 
   static underage(): LoanApplicationDto {
-    return new LoanApplicationDto(2000, 0, 15, true, 1000, 6)
+    return new LoanApplicationDto(2000, 0, 16, true, 1000, 6)
   }
 }
