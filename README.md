@@ -21,5 +21,4 @@
 | TC03  | Low risk                       | income=3000, debt=0, age=30, ...    | 200 OK, riskLevel=Low     |
 | TC04  | High risk                      | income=1000, debt=900, age=20, ...  | 200 OK, riskLevel=High    |
 | TC05  | Debt < 0                       | income=2000, debt=-1, age=28, ...   | 400 Bad Request           |
-| TC06  | Age < 17 (Age = 16)            | income=2000, debt=0, age=16, ...    | 400 Bad Request           |
  
