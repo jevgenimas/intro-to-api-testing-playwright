@@ -41,8 +41,4 @@ export class LoanApplicationDto {
   static negativeDebt(): LoanApplicationDto {
     return new LoanApplicationDto(2000, -1, 28, true, 1000, 6)
   }
-
-  static underage(): LoanApplicationDto {
-    return new LoanApplicationDto(2000, 0, 16, true, 1000, 6)
-  }
 }
