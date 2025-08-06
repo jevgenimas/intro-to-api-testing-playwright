@@ -22,6 +22,7 @@ export class OrderDto {
     this.id = id
   }
 
+  // Создание заказа со всеми полями (включая id)
   static createOrderWithRandomData(): OrderDto {
     return new OrderDto(
       'OPEN',
@@ -33,14 +34,15 @@ export class OrderDto {
     )
   }
 
+  // Создание заказа без поля id — для POST запроса
   static createOrderWithoutId(): OrderDto {
     return new OrderDto(
       'OPEN',
-      Math.floor(Math.random() * 100), // courierId
+      Math.floor(Math.random() * 100),
       'John Doe',
       '+123456789',
       'urgent order',
-      undefined
+      undefined,
     )
   }
 }
