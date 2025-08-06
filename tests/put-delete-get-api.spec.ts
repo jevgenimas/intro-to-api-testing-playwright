@@ -1,5 +1,3 @@
-// HW_09
-
 import { expect, test } from '@playwright/test'
 import { StatusCodes } from 'http-status-codes'
 
@@ -16,8 +14,6 @@ const validOrderBody = (id: number) => {
     id: id,
   }
 }
-
-// GET /test-orders
 
 test('GET login with valid username and password should return 200', async ({ request }) => {
   const response = await request.get(BASE_URL, {
@@ -48,8 +44,6 @@ test('GET login with missing username should return 500', async ({ request }) =>
   })
   expect(response.status()).toBe(StatusCodes.INTERNAL_SERVER_ERROR)
 })
-
-// DELETE /test-orders/{id}
 
 test('DELETE order with valid api_key and valid id 1 should return 204', async ({ request }) => {
   const response = await request.delete(`${BASE_URL}/1`, {
@@ -137,8 +131,6 @@ test('DELETE order with valid api_key and missing id should return 405', async (
   })
   expect(response.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
 })
-
-// PUT /test-orders/{id}
 
 test('PUT order with valid data with valid id 1 should return 200', async ({ request }) => {
   const response = await request.put(`${BASE_URL}/1`, {
