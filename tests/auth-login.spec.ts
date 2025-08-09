@@ -7,83 +7,99 @@ const serviceURL = 'https://backend.tallinn-learning.ee/'
 const loginPath = 'login/student'
 const orderPath = 'orders'
 
-// Регулярное выражение для JWT токена
 const jwtPattern = /^eyJhb[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/
 
 test.describe('Tallinn delivery API tests', () => {
   test('login with correct data and verify auth token', async ({ request }) => {
     const requestBody = LoginDto.createLoginWithCorrectData()
-    console.log('Request body:', requestBody)
-
-    const response = await request.post(`${serviceURL}${loginPath}`, {
-      data: requestBody,
-    })
-
+    const response = await request.post(`${serviceURL}${loginPath}`, { data: requestBody })
     const jwtValue = await response.text()
-    console.log('Response status:', response.status())
-    console.log('JWT:', jwtValue)
-
     expect(response.status()).toBe(StatusCodes.OK)
     expect(jwtValue).toMatch(jwtPattern)
   })
 
   test('login with incorrect data should return 401', async ({ request }) => {
     const requestBody = LoginDto.createLoginWithIncorrectData()
-    console.log('Incorrect login request:', requestBody)
-
-    const response = await request.post(`${serviceURL}${loginPath}`, {
-      data: requestBody,
-    })
-
+    const response = await request.post(`${serviceURL}${loginPath}`, { data: requestBody })
     const responseBody = await response.text()
-    console.log('Response status:', response.status())
-    console.log('Response body:', responseBody)
-
     expect(response.status()).toBe(StatusCodes.UNAUTHORIZED)
     expect(responseBody).toBe('')
   })
 
   test('login and create order (authorized)', async ({ request }) => {
-    // Шаг 1: логин
     const loginResponse = await request.post(`${serviceURL}${loginPath}`, {
       data: LoginDto.createLoginWithCorrectData(),
     })
     const jwt = await loginResponse.text()
 
-    // Шаг 2: создать заказ
     const orderResponse = await request.post(`${serviceURL}${orderPath}`, {
       data: OrderDto.createOrderWithoutId(),
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-      },
+      headers: { Authorization: `Bearer ${jwt}` },
     })
 
     const responseBody = await orderResponse.json()
-
-    console.log('Order status:', orderResponse.status())
-    console.log('Order response:', responseBody)
-
     expect.soft(orderResponse.status()).toBe(StatusCodes.OK)
     expect.soft(responseBody.status).toBe('OPEN')
     expect.soft(responseBody.id).toBeDefined()
   })
 
+  test('Authorization and Get order by ID', async ({ request }) => {
+    const loginResponse = await request.post(`${serviceURL}${loginPath}`, {
+      data: LoginDto.createLoginWithCorrectData(),
+    })
+    const jwt = await loginResponse.text()
+
+    const createOrderResponse = await request.post(`${serviceURL}${orderPath}`, {
+      data: OrderDto.createOrderWithoutId(),
+      headers: { Authorization: `Bearer ${jwt}` },
+    })
+    const createdOrder = await createOrderResponse.json()
+
+    const getOrderResponse = await request.get(`${serviceURL}${orderPath}/${createdOrder.id}`, {
+      headers: { Authorization: `Bearer ${jwt}` },
+    })
+    const fetchedOrder = await getOrderResponse.json()
+
+    expect(getOrderResponse.status()).toBe(StatusCodes.OK)
+    expect(fetchedOrder.id).toBe(createdOrder.id)
+    expect(fetchedOrder.status).toBe('OPEN')
+  })
+
+  test('Authorization + Delete order by ID', async ({ request }) => {
+    const loginResponse = await request.post(`${serviceURL}${loginPath}`, {
+      data: LoginDto.createLoginWithCorrectData(),
+    })
+    const jwt = await loginResponse.text()
+
+    const createOrderResponse = await request.post(`${serviceURL}${orderPath}`, {
+      data: OrderDto.createOrderWithoutId(),
+      headers: { Authorization: `Bearer ${jwt}` },
+    })
+    const createdOrder = await createOrderResponse.json()
+
+    const deleteResponse = await request.delete(`${serviceURL}${orderPath}/${createdOrder.id}`, {
+      headers: { Authorization: `Bearer ${jwt}` },
+    })
+    expect(deleteResponse.status()).toBe(StatusCodes.OK)
+
+    const getDeletedOrderResponse = await request.get(
+      `${serviceURL}${orderPath}/${createdOrder.id}`,
+      { headers: { Authorization: `Bearer ${jwt}` } },
+    )
+    const bodyText = await getDeletedOrderResponse.text()
+    expect(bodyText).toBe('')
+  })
+
   test('incorrect HTTP method should return 405', async ({ request }) => {
     const response = await request.get(`${serviceURL}${loginPath}`)
-    console.log('Status for wrong method:', response.status())
     expect(response.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
   })
 
   test('login with invalid request body structure should return 401', async ({ request }) => {
-    const invalidRequestBody = {
-      login: 'wrong-field', // неправильное поле, не username
-    }
-
+    const invalidRequestBody = { login: 'wrong-field' }
     const response = await request.post(`${serviceURL}${loginPath}`, {
       data: invalidRequestBody,
     })
-
-    console.log('Response status for invalid body:', response.status())
     expect(response.status()).toBe(StatusCodes.UNAUTHORIZED)
   })
 })
